@@ -28,7 +28,11 @@ class Daylight::ResourceProxy
   ##
   # Loads records from server based on current paremeters and from URL
   def load
-    resource_class.find(:all, params: to_params, from: @from)
+    if association_resource && association_resource.attributes[association_name]
+      association_resource.attributes[association_name]
+    else
+      resource_class.find(:all, params: to_params, from: @from)
+    end
   end
 
   ##
